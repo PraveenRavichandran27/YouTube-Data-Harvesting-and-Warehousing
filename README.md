@@ -13,9 +13,9 @@ This project aims to develop a user-friendly Streamlit application that utilizes
 
 ### Libraries:
 * googleapiclient.discovery
-* pandas
+* Pandas
 * MySql
-* streamlit
+* Streamlit
 
 ### Workflow:
 
