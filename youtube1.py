@@ -26,14 +26,13 @@ def Api_connect():
     return youtube
 
 utube_call = Api_connect()
-
 #Get Channel Information
 
 def Channel_Info(channel_id):
 
     cursor.execute("""CREATE TABLE IF NOT EXISTS channel_info (
                         channel_name VARCHAR(255),
-                        channel_id VARCHAR(255),
+                        channel_id VARCHAR(255) PRIMARY KEY,
                         subscribe INT,
                         views INT,
                         total_videos INT,
@@ -109,19 +108,20 @@ def Get_Video_Details(Video_id):
 
         cursor.execute("""CREATE TABLE IF NOT EXISTS video_details(
                     channel_name VARCHAR(255),
-                    channel_id VARCHAR(255),
-                    video_id VARCHAR(255),
+                    channel_id VARCHAR(255) ,
+                    video_id VARCHAR(255) PRIMARY KEY ,
                     title TEXT,
                     tags TEXT,
                     thumbnail TEXT,
                     description TEXT,
                     published_date DATETIME,
                     duration TIME,
-                    views INT,
+                    views BIGINT,
                     likes INT,
                     dislikes INT,
                     comments INT
-                )""")
+                )"""
+                     )
 
         for item in response['items']:
             Data = dict(
@@ -155,20 +155,19 @@ def Get_Video_Details(Video_id):
             parsed_datetime = datetime.fromisoformat(iso_datetime.replace('Z', '+00:00'))
             mysql_published_date = parsed_datetime.strftime('%Y-%m-%d %H:%M:%S')
 
-        cursor.execute("INSERT INTO video_details(channel_name, channel_id, video_id, title, tags, thumbnail, description, published_date, duration, views, likes, dislikes, comments) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s,%s)",
-               (Data['channel_Name'], Data['Channel_Id'], Data['Video_Id'],Data['Title'], Data['Tags'], Data['Thumbnail'], Data['Description'],mysql_published_date, sql_duration, Data['Views'], Data['Likes'], Data['Dislikes'], Data['Comments']))
+        cursor.execute("INSERT INTO video_details(channel_name, channel_id, video_id, title ,tags ,thumbnail , description, published_date, duration, views, likes, dislikes, comments) VALUES (%s, %s, %s, %s, %s, %s,  %s, %s, %s, %s,%s,%s,%s)",
+               (Data['channel_Name'], Data['Channel_Id'], Data['Video_Id'],Data['Title'],Data['Tags'], Data['Thumbnail'], Data['Description'],mysql_published_date, sql_duration, Data['Views'], Data['Likes'], Data['Dislikes'], Data['Comments']))
 
         mydb.commit()        
     return Video_List
-
 #Get Comment Details
 
 def get_comment_Details(get_Comment):
     comment_List=[]
     try:
         cursor.execute("""CREATE TABLE IF NOT EXISTS comment_details (
-                            comment_id VARCHAR(255),
-                            video_id VARCHAR(255),
+                            comment_id VARCHAR(255) PRIMARY KEY ,
+                            video_id VARCHAR(255)  ,
                             comment_text TEXT,
                             author VARCHAR(255),
                             published_date DATETIME
@@ -204,6 +203,7 @@ def get_comment_Details(get_Comment):
     return comment_List
 
 #get_playlist_details
+
 
 def get_playlist_details(channel_id):
     Playlist_Data=[]
@@ -281,7 +281,7 @@ def main():
     st.sidebar.header('Menu')
     option=st.sidebar.radio("Select Option",['Home','Queries'])
     if option=="Home":
-            st.header(':blue[YOUTUBE DATA HARVESTING AND WAREHOUSING]', divider='rainbow')
+            st.subheader(':orange[YOUTUBE-DATA-HARVESTING-AND-WAREHOUSING]', divider='blue')
             channel_id = st.text_input("Enter Channel ID")
             
             if st.button("Get Channel Details"):
