@@ -31,4 +31,8 @@ Step 5:Query the SQL data warehouse: You can use SQL queries to join the tables 
 
 Step 6: Display data in the Streamlit app: Finally, you can display the retrieved data in the Streamlit app. You can use Streamlit's data visualization features to create charts and graphs to help users analyze the data.
 
+## Contacts:
 
+Email: praveen2726r@gmail.com     
+
+LinkedIn: https://www.linkedin.com/in/praveenr27/
