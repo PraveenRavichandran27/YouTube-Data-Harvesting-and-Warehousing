@@ -6,7 +6,7 @@ from datetime import datetime,timedelta
 import json
 #SQL connection
 
-mydb = mysql.connector.connect(
+mydb = mysql.connector.connect( 
     host="127.0.0.1",
     port="3306",
     user="root",
